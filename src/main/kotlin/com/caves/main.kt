@@ -1,4 +1,4 @@
-package com.example
+package com.caves
 
 import org.hexworks.zircon.api.CP437TilesetResources
 import org.hexworks.zircon.api.ColorThemes
