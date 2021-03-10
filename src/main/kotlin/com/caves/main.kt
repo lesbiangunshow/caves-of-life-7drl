@@ -9,19 +9,6 @@ import org.hexworks.zircon.api.application.AppConfig
 import org.hexworks.zircon.api.extensions.toScreen
 
 fun main(args: Array<String>) {
-    val grid = SwingApplications.startTileGrid(
-            AppConfig.newBuilder()
-                    .withSize(60, 30)
-                    .withDefaultTileset(CP437TilesetResources.rexPaint16x16())
-                    .build())
+    val grid = SwingApplications.startTileGrid(GameConfig.buildAppConfig())
     StartView(grid).dock()
-
-//    val screen = tileGrid.toScreen()
-//
-//    screen.addComponent(Components.label()
-//            .withText("Hello, Zircon!")
-//            .withPosition(23, 10))
-//
-//    screen.display()
-//    screen.theme = ColorThemes.arc()
 }
