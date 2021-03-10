@@ -1,5 +1,7 @@
 package com.caves.blocks
 
+import com.caves.builders.GameTileRepository.FLOOR
+import com.caves.builders.GameTileRepository.WALL
 import com.caves.extensions.tile
 import com.caves.world.GameEntity
 import kotlinx.collections.immutable.persistentMapOf
@@ -38,11 +40,11 @@ class GameBlock(
     }
 
     private fun updateContent() {
-        val entityTiles = currentEntities.map { it.tile }
-        content = when {
-            entityTiles.contains(PLAYER) -> PLAYER
-            entityTiles.isNotEmpty() -> entityTiles.first()
-            else -> defaultTile
-        }
+//        val entityTiles = currentEntities.map { it.tile }
+//        content = when {
+//            entityTiles.contains(PLAYER) -> PLAYER
+//            entityTiles.isNotEmpty() -> entityTiles.first()
+//            else -> defaultTile
+//        }
     }
 }

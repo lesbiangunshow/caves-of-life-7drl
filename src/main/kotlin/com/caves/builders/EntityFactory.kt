@@ -16,9 +16,9 @@ fun <T: EntityType> newGameEntityOfType(
 
 object EntityFactory {
 
-    fun newPlayer() = newGameEntityOfType(Player) {
-        attributes(EntityPosition(), EntityTile(PLAYER))
-        behaviors()
-        facets()
-    }
+//    fun newPlayer() = newGameEntityOfType(Player) {
+//        attributes(EntityPosition(), EntityTile(PLAYER))
+//        behaviors()
+//        facets()
+//    }
 }
