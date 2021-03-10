@@ -1,4 +1,4 @@
-package com.example
+package com.caves
 
 import com.example.view.StartView
 import org.hexworks.zircon.api.CP437TilesetResources
