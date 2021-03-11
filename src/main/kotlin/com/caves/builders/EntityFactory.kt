@@ -3,11 +3,11 @@ package com.caves.builders
 import com.caves.attributes.EntityPosition
 import com.caves.attributes.EntityTile
 import com.caves.attributes.types.Player
+import com.caves.builders.GameTileRepository.PLAYER
 import com.caves.world.GameContext
 import org.hexworks.amethyst.api.builder.EntityBuilder
 import org.hexworks.amethyst.api.entity.EntityType
 import org.hexworks.amethyst.api.newEntityOfType
-
 
 fun <T: EntityType> newGameEntityOfType(
     type: T,
@@ -16,9 +16,9 @@ fun <T: EntityType> newGameEntityOfType(
 
 object EntityFactory {
 
-//    fun newPlayer() = newGameEntityOfType(Player) {
-//        attributes(EntityPosition(), EntityTile(PLAYER))
-//        behaviors()
-//        facets()
-//    }
+    fun newPlayer() = newGameEntityOfType(Player) {
+        attributes(EntityPosition(), EntityTile(PLAYER))
+        behaviors()
+        facets()
+    }
 }

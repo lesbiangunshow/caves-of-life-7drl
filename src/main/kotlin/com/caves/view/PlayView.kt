@@ -5,6 +5,7 @@ import com.caves.GameConfig.SIDEBAR_WIDTH
 import com.caves.GameConfig.THEME
 import com.caves.GameConfig.WINDOW_HEIGHT
 import com.caves.GameConfig.WINDOW_WIDTH
+import com.caves.builders.GameBuilder
 import com.caves.builders.GameTileRepository
 import com.caves.world.Game
 import org.hexworks.cobalt.databinding.api.extension.toProperty
@@ -20,7 +21,7 @@ import kotlin.math.log
 
 class PlayView(
     private val grid: TileGrid,
-    private val game: Game = Game.create(),
+    private val game: Game = GameBuilder.create(),
     theme: ColorTheme = THEME
 ) : BaseView(grid, theme) {
     init {

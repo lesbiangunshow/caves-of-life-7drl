@@ -1,5 +1,6 @@
 package com.caves.builders
 
+import com.caves.builders.GameColors.ACCENT_COLOR
 import com.caves.builders.GameColors.FLOOR_BACKGROUND
 import com.caves.builders.GameColors.FLOOR_FOREGROUND
 import com.caves.builders.GameColors.WALL_BACKGROUND
@@ -13,10 +14,10 @@ object GameTileRepository {
     val EMPTY: CharacterTile = Tile.empty()
 
     val FLOOR: CharacterTile = Tile.newBuilder()
-        .withCharacter(Symbols.INTERPUNCT)                  // 1
-        .withForegroundColor(FLOOR_FOREGROUND)              // 2
-        .withBackgroundColor(FLOOR_BACKGROUND)              // 3
-        .buildCharacterTile()                               // 4
+        .withCharacter(Symbols.INTERPUNCT)
+        .withForegroundColor(FLOOR_FOREGROUND)
+        .withBackgroundColor(FLOOR_BACKGROUND)
+        .buildCharacterTile()
 
     val WALL: CharacterTile = Tile.newBuilder()
         .withCharacter('#')
@@ -24,4 +25,9 @@ object GameTileRepository {
         .withBackgroundColor(WALL_BACKGROUND)
         .buildCharacterTile()
 
+    val PLAYER = Tile.newBuilder()
+        .withCharacter('@')
+        .withBackgroundColor(FLOOR_BACKGROUND)
+        .withForegroundColor(ACCENT_COLOR)
+        .buildCharacterTile()
 }
