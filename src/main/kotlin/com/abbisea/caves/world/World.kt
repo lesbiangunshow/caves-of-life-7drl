@@ -53,6 +53,14 @@ class World(
         }
     }
 
+    fun removeEntity(entity: AnyGameEntity) {
+        fetchBlockAt(entity.position).map {
+            it.removeEntity(entity)
+        }
+        engine.removeEntity(entity)
+        entity.position = Position3D.unknown()
+    }
+
     fun addAtEmptyPosition(
         entity: AnyGameEntity,
         offset: Position3D = Position3D.create(0, 0, 0),
@@ -86,7 +94,7 @@ class World(
     ) =
         oldBlock.isPresent && newBlock.isPresent
 
-    fun findEmptyLocationWithin(offset: Position3D, size: Size3D): Maybe<Position3D> {
+    private fun findEmptyLocationWithin(offset: Position3D, size: Size3D): Maybe<Position3D> {
         var position = Maybe.empty<Position3D>()
         val maxTries = 10
         var currentTry = 0

@@ -1,7 +1,6 @@
 package com.abbisea.caves.world
 
 import com.abbisea.caves.attributes.types.Player
-import com.abbisea.caves.world.GameEntity
 import org.hexworks.amethyst.api.Context
 import org.hexworks.zircon.api.screen.Screen
 import org.hexworks.zircon.api.uievent.UIEvent
