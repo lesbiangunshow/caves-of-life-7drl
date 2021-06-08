@@ -1,6 +1,7 @@
 package com.abbisea.caves.builders
 
 import com.abbisea.caves.GameConfig
+import com.abbisea.caves.GameConfig.FUNGI_PER_LEVEL
 import com.abbisea.caves.GameConfig.LOG_AREA_HEIGHT
 import com.abbisea.caves.GameConfig.SIDEBAR_WIDTH
 import com.abbisea.caves.GameConfig.WINDOW_HEIGHT
@@ -9,7 +10,9 @@ import com.abbisea.caves.GameConfig.WORLD_SIZE
 import com.abbisea.caves.attributes.types.Player
 import com.abbisea.caves.world.Game
 import com.abbisea.caves.world.GameEntity
+import org.hexworks.amethyst.api.entity.EntityType
 import org.hexworks.zircon.api.data.Position3D
+import org.hexworks.zircon.api.data.Size
 import org.hexworks.zircon.api.data.Size3D
 
 class GameBuilder(val worldSize: Size3D) {
@@ -34,7 +37,7 @@ class GameBuilder(val worldSize: Size3D) {
     fun buildGame(): Game {
         prepareWorld()
         val player = addPlayer()
-
+        addFungi()
         return Game.create(world, player)
     }
 
@@ -43,11 +46,26 @@ class GameBuilder(val worldSize: Size3D) {
     }
 
     private fun addPlayer(): GameEntity<Player> =
-        EntityFactory.newPlayer().also {
-            world.addAtEmptyPosition(
-                it,
-                offset = Position3D.create(0, 0, GameConfig.DUNGEON_LEVELS - 1),
-                size = world.visibleSize.copy(zLength = 0)
-            )
+        EntityFactory.newPlayer().addToWorld(
+            atLevel = GameConfig.DUNGEON_LEVELS - 1,
+            atArea = world.visibleSize.to2DSize()
+        )
+
+    private fun addFungi() = also {
+        repeat(world.actualSize.zLength) { level ->
+            repeat(FUNGI_PER_LEVEL) {
+                EntityFactory.newFungus().addToWorld(level)
+            }
         }
+    }
+
+    private fun <T : EntityType> GameEntity<T>.addToWorld(
+        atLevel: Int,
+        atArea: Size = world.actualSize.to2DSize()
+    ): GameEntity<T> {
+        world.addAtEmptyPosition(
+            this, offset = Position3D.defaultPosition().withZ(atLevel), Size3D.from2DSize(atArea)
+        )
+        return this
+    }
 }

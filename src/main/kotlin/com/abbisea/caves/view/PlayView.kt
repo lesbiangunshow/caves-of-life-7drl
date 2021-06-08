@@ -7,8 +7,11 @@ import com.abbisea.caves.GameConfig.WINDOW_HEIGHT
 import com.abbisea.caves.GameConfig.WINDOW_WIDTH
 import com.abbisea.caves.builders.GameBuilder
 import com.abbisea.caves.builders.GameTileRepository
+import com.abbisea.caves.events.GameLogEvent
 import com.abbisea.caves.world.Game
 import org.hexworks.cobalt.databinding.api.extension.toProperty
+import org.hexworks.cobalt.events.api.KeepSubscription
+import org.hexworks.cobalt.events.api.subscribeTo
 import org.hexworks.zircon.api.ComponentDecorations.box
 import org.hexworks.zircon.api.Components
 import org.hexworks.zircon.api.component.ColorTheme
@@ -18,6 +21,7 @@ import org.hexworks.zircon.api.grid.TileGrid
 import org.hexworks.zircon.api.uievent.KeyboardEventType
 import org.hexworks.zircon.api.uievent.Processed
 import org.hexworks.zircon.api.view.base.BaseView
+import org.hexworks.zircon.internal.Zircon
 import org.hexworks.zircon.internal.game.impl.GameAreaComponentRenderer
 
 class PlayView(
@@ -55,6 +59,15 @@ class PlayView(
         screen.handleKeyboardEvents(KeyboardEventType.KEY_PRESSED) { event, _ ->
             game.world.update(screen, event, game)
             Processed
+        }
+
+        Zircon.eventBus.subscribeTo<GameLogEvent> { (text) ->
+            logArea.addParagraph(
+                paragraph = text,
+                withNewLine = false,
+                withTypingEffectSpeedInMs = 50
+            )
+            KeepSubscription
         }
     }
 }

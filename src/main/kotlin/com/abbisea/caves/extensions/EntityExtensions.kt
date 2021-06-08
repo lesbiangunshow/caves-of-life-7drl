@@ -4,8 +4,12 @@ import com.abbisea.caves.attributes.EntityActions
 import com.abbisea.caves.attributes.EntityPosition
 import com.abbisea.caves.attributes.EntityTile
 import com.abbisea.caves.attributes.flags.BlockOccupier
+import com.abbisea.caves.attributes.types.Combatant
+import com.abbisea.caves.attributes.types.Player
+import com.abbisea.caves.attributes.types.combatStats
 import com.abbisea.caves.world.AnyGameEntity
 import com.abbisea.caves.world.GameContext
+import com.abbisea.caves.world.GameEntity
 import org.hexworks.amethyst.api.Attribute
 import org.hexworks.amethyst.api.Consumed
 import org.hexworks.amethyst.api.Pass
@@ -25,7 +29,7 @@ var AnyGameEntity.position: Position3D
 val AnyGameEntity.tile: Tile
     get() = tryToFindAttribute(EntityTile::class).tile
 
-fun <T: Attribute> AnyGameEntity.tryToFindAttribute(klass: KClass<T>): T =
+fun <T : Attribute> AnyGameEntity.tryToFindAttribute(klass: KClass<T>): T =
     findAttribute(klass).orElseThrow { NoSuchElementException("Entity '$this' has no property with type '${klass.simpleName}'.") }
 
 val AnyGameEntity.occupiesBlock: Boolean
@@ -43,3 +47,8 @@ suspend fun AnyGameEntity.tryActionsOn(context: GameContext, target: AnyGameEnti
     }
     return result
 }
+
+val AnyGameEntity.isPlayer: Boolean
+    get() = this.type == Player
+
+fun GameEntity<Combatant>.hasNoHealthLeft(): Boolean = combatStats.hp <= 0

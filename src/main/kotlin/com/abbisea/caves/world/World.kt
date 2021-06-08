@@ -94,7 +94,7 @@ class World(
     ) =
         oldBlock.isPresent && newBlock.isPresent
 
-    private fun findEmptyLocationWithin(offset: Position3D, size: Size3D): Maybe<Position3D> {
+    fun findEmptyLocationWithin(offset: Position3D, size: Size3D): Maybe<Position3D> {
         var position = Maybe.empty<Position3D>()
         val maxTries = 10
         var currentTry = 0
