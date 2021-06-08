@@ -1,5 +1,6 @@
 package com.abbisea.caves.blocks
 
+import com.abbisea.caves.builders.GameTileRepository
 import com.abbisea.caves.builders.GameTileRepository.FLOOR
 import com.abbisea.caves.builders.GameTileRepository.PLAYER
 import com.abbisea.caves.builders.GameTileRepository.WALL
@@ -29,6 +30,7 @@ class GameBlock(
     }
 
     init {
+        top = GameTileRepository.UNREVEALED
         updateContent()
     }
 

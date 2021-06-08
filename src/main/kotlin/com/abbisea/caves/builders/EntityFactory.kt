@@ -2,6 +2,7 @@ package com.abbisea.caves.builders
 
 import com.abbisea.caves.attributes.*
 import com.abbisea.caves.attributes.flags.BlockOccupier
+import com.abbisea.caves.attributes.flags.VisionBlocker
 import com.abbisea.caves.attributes.types.*
 import com.abbisea.caves.builders.GameTileRepository.PLAYER
 import com.abbisea.caves.messages.Attack
@@ -19,6 +20,10 @@ fun <T : EntityType> newGameEntityOfType(
 
 object EntityFactory {
 
+    fun newFogOfWar() = newGameEntityOfType(FOW) {
+        behaviors(FogOfWar)
+    }
+
     fun newPlayer() = newGameEntityOfType(Player) {
         attributes(
             EntityPosition(),
@@ -28,14 +33,15 @@ object EntityFactory {
                 maxHp = 100,
                 attackValue = 10,
                 defenseValue = 5
-            )
+            ),
+            Vision(9)
         )
         behaviors(InputReceiver)
         facets(Movable, CameraMover, StairClimber, StairDescender)
     }
 
     fun newWall() = newGameEntityOfType(Wall) {
-        attributes(EntityPosition(), BlockOccupier, EntityTile(GameTileRepository.WALL))
+        attributes(EntityPosition(), BlockOccupier, EntityTile(GameTileRepository.WALL), VisionBlocker)
         facets(Diggable)
     }
 

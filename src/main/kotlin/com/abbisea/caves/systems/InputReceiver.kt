@@ -15,7 +15,7 @@ import org.hexworks.zircon.api.data.Position3D
 import org.hexworks.zircon.api.uievent.KeyCode
 import org.hexworks.zircon.api.uievent.KeyboardEvent
 
-object InputReceiver: BaseBehavior<GameContext>() {
+object InputReceiver : BaseBehavior<GameContext>() {
 
     private val logger = LoggerFactory.getLogger(this::class)
 

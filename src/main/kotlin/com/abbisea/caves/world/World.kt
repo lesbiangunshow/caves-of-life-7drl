@@ -1,16 +1,21 @@
 package com.abbisea.caves.world
 
+import com.abbisea.caves.attributes.Vision
 import com.abbisea.caves.blocks.GameBlock
+import com.abbisea.caves.extensions.blocksVision
 import com.abbisea.caves.extensions.position
 import org.hexworks.amethyst.api.Engine
 import org.hexworks.amethyst.internal.TurnBasedEngine
 import org.hexworks.cobalt.datatypes.Maybe
 import org.hexworks.zircon.api.builder.game.GameAreaBuilder
+import org.hexworks.zircon.api.data.Position
 import org.hexworks.zircon.api.data.Position3D
 import org.hexworks.zircon.api.data.Size3D
 import org.hexworks.zircon.api.data.Tile
 import org.hexworks.zircon.api.game.GameArea
 import org.hexworks.zircon.api.screen.Screen
+import org.hexworks.zircon.api.shape.EllipseFactory
+import org.hexworks.zircon.api.shape.LineFactory
 import org.hexworks.zircon.api.uievent.UIEvent
 
 class World(
@@ -43,6 +48,10 @@ class World(
                 player = game.player
             )
         )
+    }
+
+    fun addWorldEntity(entity: AnyGameEntity) {
+        engine.addEntity(entity)
     }
 
     fun addEntity(entity: AnyGameEntity, position: Position3D) {
@@ -112,5 +121,30 @@ class World(
             currentTry++
         }
         return position
+    }
+
+    fun isVisionBlockedAt(pos: Position3D): Boolean =
+        fetchBlockAt(pos).fold(whenEmpty = { false }, whenPresent = {
+            it.entities.any(AnyGameEntity::blocksVision)
+        })
+
+    fun findVisiblePositionsFor(entity: AnyGameEntity): Iterable<Position> {
+        val centerPos = entity.position.to2DPosition()
+        return entity.findAttribute(Vision::class).map { (radius) ->
+            EllipseFactory.buildEllipse(
+                fromPosition = centerPos,
+                toPosition = centerPos.withRelativeX(radius).withRelativeY(radius)
+            ).positions.flatMap { ringPos ->
+                val result = mutableListOf<Position>()
+                val iter = LineFactory.buildLine(centerPos, ringPos).iterator()
+                do {
+                    val next = iter.next()
+                    result.add(next)
+                } while (iter.hasNext() &&
+                    isVisionBlockedAt(Position3D.from2DPosition(next, entity.position.z)).not()
+                )
+                result
+            }
+        }.orElse(listOf())
     }
 }

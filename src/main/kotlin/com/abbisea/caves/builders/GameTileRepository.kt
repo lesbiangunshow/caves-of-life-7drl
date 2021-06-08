@@ -4,6 +4,7 @@ import com.abbisea.caves.builders.GameColors.ACCENT_COLOR
 import com.abbisea.caves.builders.GameColors.FLOOR_BACKGROUND
 import com.abbisea.caves.builders.GameColors.FLOOR_FOREGROUND
 import com.abbisea.caves.builders.GameColors.FUNGUS_COLOR
+import com.abbisea.caves.builders.GameColors.UNREVEALED_COLOR
 import com.abbisea.caves.builders.GameColors.WALL_BACKGROUND
 import com.abbisea.caves.builders.GameColors.WALL_FOREGROUND
 import org.hexworks.zircon.api.data.CharacterTile
@@ -13,6 +14,11 @@ import org.hexworks.zircon.api.graphics.Symbols
 object GameTileRepository {
 
     val EMPTY: CharacterTile = Tile.empty()
+
+    val UNREVEALED = Tile.newBuilder()
+        .withCharacter(' ')
+        .withBackgroundColor(UNREVEALED_COLOR)
+        .buildCharacterTile()
 
     val FLOOR: CharacterTile = Tile.newBuilder()
         .withCharacter(Symbols.INTERPUNCT)

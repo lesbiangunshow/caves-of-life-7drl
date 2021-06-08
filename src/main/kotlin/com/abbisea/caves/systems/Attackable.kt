@@ -13,7 +13,7 @@ import org.hexworks.amethyst.api.Response
 import org.hexworks.amethyst.api.base.BaseFacet
 import java.lang.Integer.max
 
-object Attackable: BaseFacet<GameContext, Attack>(Attack::class) {
+object Attackable : BaseFacet<GameContext, Attack>(Attack::class) {
     override suspend fun receive(message: Attack): Response {
         val (context, attacker, target) = message
         return if (attacker.isPlayer || target.isPlayer) {

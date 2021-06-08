@@ -2,6 +2,10 @@ package com.abbisea.caves.attributes.types
 
 import org.hexworks.amethyst.api.base.BaseEntityType
 
+object FOW: BaseEntityType(
+    name = "Fog of War"
+)
+
 object Player : BaseEntityType(
     name = "player"
 ), Combatant

@@ -4,6 +4,7 @@ import com.abbisea.caves.attributes.EntityActions
 import com.abbisea.caves.attributes.EntityPosition
 import com.abbisea.caves.attributes.EntityTile
 import com.abbisea.caves.attributes.flags.BlockOccupier
+import com.abbisea.caves.attributes.flags.VisionBlocker
 import com.abbisea.caves.attributes.types.Combatant
 import com.abbisea.caves.attributes.types.Player
 import com.abbisea.caves.attributes.types.combatStats
@@ -47,6 +48,9 @@ suspend fun AnyGameEntity.tryActionsOn(context: GameContext, target: AnyGameEnti
     }
     return result
 }
+
+val AnyGameEntity.blocksVision: Boolean
+    get() = this.findAttribute(VisionBlocker::class).isPresent
 
 val AnyGameEntity.isPlayer: Boolean
     get() = this.type == Player

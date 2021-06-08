@@ -18,6 +18,8 @@ import org.hexworks.zircon.api.component.ColorTheme
 import org.hexworks.zircon.api.component.ComponentAlignment
 import org.hexworks.zircon.api.game.ProjectionMode
 import org.hexworks.zircon.api.grid.TileGrid
+import org.hexworks.zircon.api.uievent.KeyCode
+import org.hexworks.zircon.api.uievent.KeyboardEvent
 import org.hexworks.zircon.api.uievent.KeyboardEventType
 import org.hexworks.zircon.api.uievent.Processed
 import org.hexworks.zircon.api.view.base.BaseView
@@ -32,7 +34,8 @@ class PlayView(
     init {
         val sidebar = Components.panel()
             .withSize(
-                SIDEBAR_WIDTH, WINDOW_HEIGHT)
+                SIDEBAR_WIDTH, WINDOW_HEIGHT
+            )
             .withDecorations(box())
             .build()
 
@@ -69,5 +72,15 @@ class PlayView(
             )
             KeepSubscription
         }
+
+        game.world.update(
+            screen,
+            KeyboardEvent(
+                type = KeyboardEventType.KEY_TYPED,
+                key = "",
+                code = KeyCode.DEAD_GRAVE
+            ),
+            game
+        )
     }
 }

@@ -3,6 +3,8 @@ package com.abbisea.caves.builders
 import org.hexworks.zircon.api.color.TileColor
 
 object GameColors {
+    val UNREVEALED_COLOR = TileColor.fromString("#090909")
+
     val WALL_FOREGROUND = TileColor.fromString("#75715E")
     val WALL_BACKGROUND = TileColor.fromString("#3E3D32")
 

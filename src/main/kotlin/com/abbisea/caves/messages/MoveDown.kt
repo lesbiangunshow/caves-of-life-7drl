@@ -7,4 +7,4 @@ import com.abbisea.caves.world.GameMessage
 data class MoveDown(
     override val context: GameContext,
     override val source: AnyGameEntity
-): GameMessage
+) : GameMessage

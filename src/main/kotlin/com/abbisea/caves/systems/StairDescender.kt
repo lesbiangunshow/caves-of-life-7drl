@@ -2,12 +2,10 @@ package com.abbisea.caves.systems
 
 import com.abbisea.caves.attributes.types.Player
 import com.abbisea.caves.attributes.types.StairsDown
-import com.abbisea.caves.attributes.types.StairsUp
 import com.abbisea.caves.blocks.GameBlock
 import com.abbisea.caves.extensions.position
 import com.abbisea.caves.functions.logGameEvent
 import com.abbisea.caves.messages.MoveDown
-import com.abbisea.caves.messages.MoveUp
 import com.abbisea.caves.world.GameContext
 import org.hexworks.amethyst.api.Consumed
 import org.hexworks.amethyst.api.Response
