@@ -1,22 +1,21 @@
 package com.abbisea.caves.attributes
 
+import com.abbisea.caves.extensions.AnyGameEntity
 import com.abbisea.caves.messages.EntityAction
-import com.abbisea.caves.world.AnyGameEntity
 import com.abbisea.caves.world.GameContext
 import org.hexworks.amethyst.api.base.BaseAttribute
 import org.hexworks.amethyst.api.entity.EntityType
-import java.lang.Exception
 import kotlin.reflect.KClass
 
 class EntityActions(
     private vararg val actions: KClass<out EntityAction<out EntityType, out EntityType>>
-): BaseAttribute() {
+) : BaseAttribute() {
 
     fun createActionsFor(
         context: GameContext,
         source: AnyGameEntity,
         target: AnyGameEntity
-    ) : Iterable<EntityAction<out EntityType, out EntityType>> =
+    ): Iterable<EntityAction<out EntityType, out EntityType>> =
         actions.map {
             try {
                 it.constructors.first().call(context, source, target)

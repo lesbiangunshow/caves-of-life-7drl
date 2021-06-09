@@ -1,12 +1,10 @@
 package com.abbisea.caves.systems
 
 import com.abbisea.caves.attributes.types.Player
+import com.abbisea.caves.extensions.GameEntity
 import com.abbisea.caves.extensions.position
-import com.abbisea.caves.messages.MoveDown
-import com.abbisea.caves.messages.MoveTo
-import com.abbisea.caves.messages.MoveUp
+import com.abbisea.caves.messages.*
 import com.abbisea.caves.world.GameContext
-import com.abbisea.caves.world.GameEntity
 import org.hexworks.amethyst.api.base.BaseBehavior
 import org.hexworks.amethyst.api.entity.Entity
 import org.hexworks.amethyst.api.entity.EntityType
@@ -30,10 +28,20 @@ object InputReceiver : BaseBehavior<GameContext>() {
                 KeyCode.KEY_D -> player.moveTo(currentPos.withRelativeX(1), context)
                 KeyCode.KEY_R -> player.moveUp(context)
                 KeyCode.KEY_F -> player.moveDown(context)
+                KeyCode.KEY_P -> player.pickItemUp(currentPos, context)
+                KeyCode.KEY_I -> player.inspectInventory(currentPos, context)
                 else -> logger.debug("UI Event ($uiEvent) does not have a corresponding command, it is ignored.")
             }
         }
         return true
+    }
+
+    private suspend fun GameEntity<Player>.inspectInventory(position: Position3D, context: GameContext) {
+        receiveMessage(InspectInventory(context, this, position))
+    }
+
+    private suspend fun GameEntity<Player>.pickItemUp(position: Position3D, context: GameContext) {
+        receiveMessage(PickItemUp(context, this, position))
     }
 
     private suspend fun GameEntity<Player>.moveTo(position: Position3D, context: GameContext) {

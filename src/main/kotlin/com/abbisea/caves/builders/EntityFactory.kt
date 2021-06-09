@@ -12,6 +12,8 @@ import com.abbisea.caves.world.GameContext
 import org.hexworks.amethyst.api.builder.EntityBuilder
 import org.hexworks.amethyst.api.entity.EntityType
 import org.hexworks.amethyst.api.newEntityOfType
+import org.hexworks.zircon.api.GraphicalTilesetResources
+import org.hexworks.zircon.api.data.Tile
 
 fun <T : EntityType> newGameEntityOfType(
     type: T,
@@ -26,6 +28,7 @@ object EntityFactory {
 
     fun newPlayer() = newGameEntityOfType(Player) {
         attributes(
+            BlockOccupier,
             EntityPosition(),
             EntityTile(PLAYER),
             EntityActions(Dig::class, Attack::class),
@@ -34,15 +37,40 @@ object EntityFactory {
                 attackValue = 10,
                 defenseValue = 5
             ),
-            Vision(9)
+            Vision(9),
+            Inventory(10)
         )
         behaviors(InputReceiver)
-        facets(Movable, CameraMover, StairClimber, StairDescender)
+        facets(
+            Movable,
+            CameraMover,
+            StairClimber,
+            StairDescender,
+            Attackable,
+            Destructible,
+            ItemPicker,
+            ItemDropper,
+            InventoryInspector
+        )
     }
 
     fun newWall() = newGameEntityOfType(Wall) {
         attributes(EntityPosition(), BlockOccupier, EntityTile(GameTileRepository.WALL), VisionBlocker)
         facets(Diggable)
+    }
+
+    fun newStairsup() = newGameEntityOfType(StairsUp) {
+        attributes(
+            EntityTile(GameTileRepository.STAIRS_UP),
+            EntityPosition()
+        )
+    }
+
+    fun newStairsDown() = newGameEntityOfType(StairsDown) {
+        attributes(
+            EntityTile(GameTileRepository.STAIRS_DOWN),
+            EntityPosition()
+        )
     }
 
     fun newFungus(fungusSpread: FungusSpread = FungusSpread()) = newGameEntityOfType(Fungus) {
@@ -61,17 +89,32 @@ object EntityFactory {
         behaviors(FungusGrowth)
     }
 
-    fun newStairsup() = newGameEntityOfType(StairsUp) {
+    fun newBat() = newGameEntityOfType(Bat) {
         attributes(
-            EntityTile(GameTileRepository.STAIRS_UP),
-            EntityPosition()
+            BlockOccupier,
+            EntityPosition(),
+            EntityTile(GameTileRepository.BAT),
+            CombatStats.create(
+                maxHp = 5,
+                attackValue = 2,
+                defenseValue = 1
+            ),
+            EntityActions(Attack::class)
         )
+        facets(Movable, Attackable, Destructible)
+        behaviors(Wanderer)
     }
 
-    fun newStairsDown() = newGameEntityOfType(StairsDown) {
+    fun newZircon() = newGameEntityOfType(Zircon) {
         attributes(
-            EntityTile(GameTileRepository.STAIRS_DOWN),
-            EntityPosition()
+            ItemIcon(
+                Tile.newBuilder()
+                    .withName("white gem")
+                    .withTileset(GraphicalTilesetResources.nethack16x16())
+                    .buildGraphicalTile()
+            ),
+            EntityPosition(),
+            EntityTile(GameTileRepository.ZIRCON)
         )
     }
 }

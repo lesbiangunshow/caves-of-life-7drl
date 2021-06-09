@@ -1,13 +1,14 @@
 package com.abbisea.caves.messages
 
+import com.abbisea.caves.extensions.GameItem
+import com.abbisea.caves.extensions.GameItemHolder
 import com.abbisea.caves.extensions.GameMessage
 import com.abbisea.caves.world.GameContext
-import org.hexworks.amethyst.api.entity.Entity
-import org.hexworks.amethyst.api.entity.EntityType
 import org.hexworks.zircon.api.data.Position3D
 
-data class MoveTo(
+data class DropItem(
     override val context: GameContext,
-    override val source: Entity<EntityType, GameContext>,
+    override val source: GameItemHolder,
+    val item: GameItem,
     val position: Position3D
 ) : GameMessage

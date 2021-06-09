@@ -1,15 +1,17 @@
 package com.abbisea.caves.builders
 
 import com.abbisea.caves.GameConfig
+import com.abbisea.caves.GameConfig.BATS_PER_LEVEL
 import com.abbisea.caves.GameConfig.FUNGI_PER_LEVEL
 import com.abbisea.caves.GameConfig.LOG_AREA_HEIGHT
 import com.abbisea.caves.GameConfig.SIDEBAR_WIDTH
 import com.abbisea.caves.GameConfig.WINDOW_HEIGHT
 import com.abbisea.caves.GameConfig.WINDOW_WIDTH
 import com.abbisea.caves.GameConfig.WORLD_SIZE
+import com.abbisea.caves.GameConfig.ZIRCONS_PER_LEVEL
 import com.abbisea.caves.attributes.types.Player
+import com.abbisea.caves.extensions.GameEntity
 import com.abbisea.caves.world.Game
-import com.abbisea.caves.world.GameEntity
 import org.hexworks.amethyst.api.entity.EntityType
 import org.hexworks.zircon.api.data.Position3D
 import org.hexworks.zircon.api.data.Size
@@ -38,6 +40,8 @@ class GameBuilder(val worldSize: Size3D) {
         prepareWorld()
         val player = addPlayer()
         addFungi()
+        addBats()
+        addZircons()
         world.addWorldEntity(EntityFactory.newFogOfWar())
 
         return Game.create(world, player)
@@ -57,6 +61,22 @@ class GameBuilder(val worldSize: Size3D) {
         repeat(world.actualSize.zLength) { level ->
             repeat(FUNGI_PER_LEVEL) {
                 EntityFactory.newFungus().addToWorld(level)
+            }
+        }
+    }
+
+    private fun addBats() = also {
+        repeat(world.actualSize.zLength) { level ->
+            repeat(BATS_PER_LEVEL) {
+                EntityFactory.newBat().addToWorld(level)
+            }
+        }
+    }
+
+    private fun addZircons() = also {
+        repeat(world.actualSize.zLength) { level ->
+            repeat(ZIRCONS_PER_LEVEL) {
+                EntityFactory.newZircon().addToWorld(level)
             }
         }
     }

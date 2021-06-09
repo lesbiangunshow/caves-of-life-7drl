@@ -4,10 +4,10 @@ import com.abbisea.caves.builders.GameTileRepository
 import com.abbisea.caves.builders.GameTileRepository.FLOOR
 import com.abbisea.caves.builders.GameTileRepository.PLAYER
 import com.abbisea.caves.builders.GameTileRepository.WALL
+import com.abbisea.caves.extensions.AnyGameEntity
+import com.abbisea.caves.extensions.GameEntity
 import com.abbisea.caves.extensions.occupiesBlock
 import com.abbisea.caves.extensions.tile
-import com.abbisea.caves.world.AnyGameEntity
-import com.abbisea.caves.world.GameEntity
 import kotlinx.collections.immutable.persistentMapOf
 import org.hexworks.amethyst.api.entity.EntityType
 import org.hexworks.cobalt.datatypes.Maybe

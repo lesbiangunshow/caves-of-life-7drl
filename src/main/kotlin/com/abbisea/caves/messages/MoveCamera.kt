@@ -1,8 +1,8 @@
 package com.abbisea.caves.messages
 
+import com.abbisea.caves.extensions.GameEntity
+import com.abbisea.caves.extensions.GameMessage
 import com.abbisea.caves.world.GameContext
-import com.abbisea.caves.world.GameEntity
-import com.abbisea.caves.world.GameMessage
 import org.hexworks.amethyst.api.entity.EntityType
 import org.hexworks.zircon.api.data.Position3D
 

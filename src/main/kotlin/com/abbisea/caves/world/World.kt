@@ -2,6 +2,7 @@ package com.abbisea.caves.world
 
 import com.abbisea.caves.attributes.Vision
 import com.abbisea.caves.blocks.GameBlock
+import com.abbisea.caves.extensions.AnyGameEntity
 import com.abbisea.caves.extensions.blocksVision
 import com.abbisea.caves.extensions.position
 import org.hexworks.amethyst.api.Engine
