@@ -8,5 +8,5 @@ data class Destroy(
     override val context: GameContext,
     override val source: AnyGameEntity,
     val target: AnyGameEntity,
-    val cause: String = "natural causes."
+    val cause: String = "natural causes"
 ) : GameMessage

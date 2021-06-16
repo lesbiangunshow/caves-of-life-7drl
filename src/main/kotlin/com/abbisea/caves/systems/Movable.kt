@@ -12,7 +12,7 @@ import org.hexworks.amethyst.api.Pass
 import org.hexworks.amethyst.api.Response
 import org.hexworks.amethyst.api.base.BaseFacet
 
-object Movable: BaseFacet<GameContext, MoveTo>(MoveTo::class) {
+object Movable : BaseFacet<GameContext, MoveTo>(MoveTo::class) {
 
     override suspend fun receive(message: MoveTo): Response {
         val (context, entity, position) = message

@@ -38,19 +38,22 @@ object EntityFactory {
                 defenseValue = 5
             ),
             Vision(9),
-            Inventory(10)
+            Inventory(10),
+            EnergyLevel(1000, 1000)
         )
-        behaviors(InputReceiver)
+        behaviors(InputReceiver, EnergyExpender)
         facets(
             Movable,
             CameraMover,
             StairClimber,
             StairDescender,
             Attackable,
-            Destructible,
             ItemPicker,
             ItemDropper,
-            InventoryInspector
+            InventoryInspector,
+            EnergyExpender,
+            Destructible,
+            DigestiveSystem
         )
     }
 
@@ -99,10 +102,27 @@ object EntityFactory {
                 attackValue = 2,
                 defenseValue = 1
             ),
-            EntityActions(Attack::class)
+            EntityActions(Attack::class),
+            Inventory(1).apply {
+                addItem(newBatMeat())
+            }
         )
-        facets(Movable, Attackable, Destructible)
+        facets(Movable, Attackable, ItemDropper, LootDropper, Destructible)
         behaviors(Wanderer)
+    }
+
+    fun newBatMeat() = newGameEntityOfType(BatMeat) {
+        attributes(
+            ItemIcon(
+                Tile.newBuilder()
+                    .withName("Meatball")
+                    .withTileset(GraphicalTilesetResources.nethack16x16())
+                    .buildGraphicalTile()
+            ),
+            NutritionalValue(750),
+            EntityPosition(),
+            EntityTile(GameTileRepository.BAT_MEAT)
+        )
     }
 
     fun newZircon() = newGameEntityOfType(Zircon) {

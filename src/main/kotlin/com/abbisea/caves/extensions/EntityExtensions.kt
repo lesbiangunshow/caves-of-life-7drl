@@ -18,6 +18,7 @@ import org.hexworks.amethyst.api.entity.EntityType
 import org.hexworks.zircon.api.data.Position3D
 import org.hexworks.zircon.api.data.Tile
 import kotlin.reflect.KClass
+import kotlin.reflect.full.isSubclassOf
 import kotlin.reflect.full.isSuperclassOf
 
 var AnyGameEntity.position: Position3D
@@ -61,3 +62,8 @@ fun GameEntity<Combatant>.hasNoHealthLeft(): Boolean = combatStats.hp <= 0
 @Suppress("UNCHECKED_CAST")
 inline fun <reified T : EntityType> Iterable<AnyGameEntity>.filterType(): List<Entity<T, GameContext>> =
     filter { T::class.isSuperclassOf(it.type::class) }.toList() as List<Entity<T, GameContext>>
+
+@Suppress("UNCHECKED_CAST")
+inline fun <reified T : EntityType> AnyGameEntity.whenTypeIs(fn: (Entity<T, GameContext>) -> Unit) {
+    if (this.type::class.isSubclassOf(T::class)) fn(this as Entity<T, GameContext>)
+}

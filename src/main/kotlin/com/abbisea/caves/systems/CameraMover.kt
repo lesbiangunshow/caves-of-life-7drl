@@ -21,7 +21,8 @@ object CameraMover : BaseFacet<GameContext, MoveCamera>(MoveCamera::class) {
                 previousPosition.y < currentPosition.y && screenPos.y > halfHeight -> scrollOneForward()
                 previousPosition.x > currentPosition.x && screenPos.x < halfWidth -> scrollOneLeft()
                 previousPosition.x < currentPosition.x && screenPos.x > halfWidth -> scrollOneRight()
-                else -> {}
+                else -> {
+                }
             }
         }
         return Consumed

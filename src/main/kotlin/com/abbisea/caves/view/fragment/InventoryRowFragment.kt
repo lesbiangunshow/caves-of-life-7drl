@@ -1,16 +1,22 @@
 package com.abbisea.caves.view.fragment
 
+import com.abbisea.caves.attributes.types.Food
 import com.abbisea.caves.attributes.types.iconTile
 import com.abbisea.caves.extensions.GameItem
+import com.abbisea.caves.extensions.whenTypeIs
 import org.hexworks.zircon.api.Components
 import org.hexworks.zircon.api.component.Fragment
-import org.hexworks.zircon.api.graphics.Symbols
 
 class InventoryRowFragment(width: Int, item: GameItem) : Fragment {
 
     val dropButton = Components.button()
-        .withText("${Symbols.ARROW_DOWN}")
         .withDecorations()
+        .withText("Drop")
+        .build()
+
+    val eatButton = Components.button()
+        .withDecorations()
+        .withText("Eat")
         .build()
 
     override val root = Components.hbox()
@@ -27,5 +33,8 @@ class InventoryRowFragment(width: Int, item: GameItem) : Fragment {
                     .withText(item.name)
             )
             addComponent(dropButton)
+            item.whenTypeIs<Food> {
+                addComponent(eatButton)
+            }
         }
 }

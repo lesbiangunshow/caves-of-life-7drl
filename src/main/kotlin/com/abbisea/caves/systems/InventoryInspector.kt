@@ -1,8 +1,12 @@
 package com.abbisea.caves.systems
 
 import com.abbisea.caves.GameConfig
+import com.abbisea.caves.attributes.types.EnergyUser
+import com.abbisea.caves.attributes.types.Food
 import com.abbisea.caves.attributes.types.inventory
+import com.abbisea.caves.extensions.whenTypeIs
 import com.abbisea.caves.messages.DropItem
+import com.abbisea.caves.messages.Eat
 import com.abbisea.caves.messages.InspectInventory
 import com.abbisea.caves.view.fragment.InventoryFragment
 import com.abbisea.caves.world.GameContext
@@ -34,11 +38,26 @@ object InventoryInspector : BaseFacet<GameContext, InspectInventory>(InspectInve
             .withDecorations(box(title = "Inventory"), shadow())
             .build()
 
-        val fragment = InventoryFragment(itemHolder.inventory, DIALOG_SIZE.width - 3) { item ->
-            CoroutineScope(Dispatchers.Single).launch {
-                itemHolder.receiveMessage(DropItem(context, itemHolder, item, position))
+        val fragment = InventoryFragment(
+            inventory = itemHolder.inventory,
+            width = DIALOG_SIZE.width - 3,
+            onDrop = { item ->
+                CoroutineScope(Dispatchers.Single).launch {
+                    itemHolder.receiveMessage(DropItem(context, itemHolder, item, position))
+                }
+            },
+            onEat = { item ->
+                CoroutineScope(Dispatchers.Single).launch {
+                    itemHolder.whenTypeIs<EnergyUser> { eater ->
+                        item.whenTypeIs<Food> { food ->
+                            itemHolder.inventory.removeItem(food)
+                            itemHolder.receiveMessage(Eat(context, eater, food))
+                        }
+                    }
+                }
             }
-        }
+
+        )
 
         panel.addFragment(fragment)
 

@@ -10,7 +10,7 @@ class Inventory(val size: Int) : BaseAttribute() {
     private val currentItems = mutableListOf<GameItem>()
 
     val items: List<GameItem>
-        get() = currentItems
+        get() = currentItems.toList()
 
     val isEmpty: Boolean
         get() = currentItems.isEmpty()

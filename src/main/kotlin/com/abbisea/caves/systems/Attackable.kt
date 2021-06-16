@@ -14,12 +14,15 @@ import org.hexworks.amethyst.api.base.BaseFacet
 import java.lang.Integer.max
 
 object Attackable : BaseFacet<GameContext, Attack>(Attack::class) {
+
     override suspend fun receive(message: Attack): Response {
         val (context, attacker, target) = message
+
         return if (attacker.isPlayer || target.isPlayer) {
             val damage = max(0, attacker.combatStats.attackValue - target.combatStats.defenseValue)
             val finalDamage = (Math.random() * damage).toInt() + 1
             target.combatStats.hp -= finalDamage
+
             logGameEvent("The $attacker hits the $target for $finalDamage!", Attackable)
             if (target.hasNoHealthLeft()) {
                 target.sendMessage(
@@ -27,7 +30,7 @@ object Attackable : BaseFacet<GameContext, Attack>(Attack::class) {
                         context = context,
                         source = attacker,
                         target = target,
-                        cause = "a blow to the head."
+                        cause = "a blow to the head"
                     )
                 )
             }

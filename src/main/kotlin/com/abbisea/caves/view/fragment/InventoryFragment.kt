@@ -8,7 +8,8 @@ import org.hexworks.zircon.api.component.Fragment
 class InventoryFragment(
     inventory: Inventory,
     width: Int,
-    onDrop: (GameItem) -> Unit
+    onDrop: (GameItem) -> Unit,
+    onEat: (GameItem) -> Unit
 ) : Fragment {
 
     companion object {
@@ -35,6 +36,10 @@ class InventoryFragment(
                     row.dropButton.onActivated {
                         detach()
                         onDrop(item)
+                    }
+                    row.eatButton.onActivated {
+                        detach()
+                        onEat(item)
                     }
                 }
             }

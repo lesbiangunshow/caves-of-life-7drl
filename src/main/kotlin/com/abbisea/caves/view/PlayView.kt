@@ -8,6 +8,7 @@ import com.abbisea.caves.GameConfig.WINDOW_WIDTH
 import com.abbisea.caves.builders.GameBuilder
 import com.abbisea.caves.builders.GameTileRepository
 import com.abbisea.caves.events.GameLogEvent
+import com.abbisea.caves.view.fragment.PlayerStatsFragment
 import com.abbisea.caves.world.Game
 import org.hexworks.cobalt.databinding.api.extension.toProperty
 import org.hexworks.cobalt.events.api.KeepSubscription
@@ -27,7 +28,7 @@ import org.hexworks.zircon.internal.Zircon
 import org.hexworks.zircon.internal.game.impl.GameAreaComponentRenderer
 
 class PlayView(
-    private val grid: TileGrid,
+    grid: TileGrid,
     private val game: Game = GameBuilder.create(),
     theme: ColorTheme = THEME
 ) : BaseView(grid, theme) {
@@ -38,6 +39,13 @@ class PlayView(
             )
             .withDecorations(box())
             .build()
+
+        sidebar.addFragment(
+            PlayerStatsFragment(
+                width = sidebar.contentSize.width,
+                player = game.player
+            )
+        )
 
         val logArea = Components.logArea()
             .withDecorations(box(title = "Log"))

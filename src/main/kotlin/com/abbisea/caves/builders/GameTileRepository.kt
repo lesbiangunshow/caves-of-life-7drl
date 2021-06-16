@@ -2,6 +2,7 @@ package com.abbisea.caves.builders
 
 import com.abbisea.caves.builders.GameColors.ACCENT_COLOR
 import com.abbisea.caves.builders.GameColors.BAT_COLOR
+import com.abbisea.caves.builders.GameColors.BAT_MEAT_COLOR
 import com.abbisea.caves.builders.GameColors.FLOOR_BACKGROUND
 import com.abbisea.caves.builders.GameColors.FLOOR_FOREGROUND
 import com.abbisea.caves.builders.GameColors.FUNGUS_COLOR
@@ -61,6 +62,12 @@ object GameTileRepository {
     val BAT = Tile.newBuilder()
         .withCharacter('b')
         .withForegroundColor(BAT_COLOR)
+        .withBackgroundColor(FLOOR_BACKGROUND)
+        .buildCharacterTile()
+
+    val BAT_MEAT = Tile.newBuilder()
+        .withCharacter('m')
+        .withForegroundColor(BAT_MEAT_COLOR)
         .withBackgroundColor(FLOOR_BACKGROUND)
         .buildCharacterTile()
 
