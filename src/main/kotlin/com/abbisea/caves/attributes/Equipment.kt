@@ -40,8 +40,8 @@ class Equipment(
         get() = " A: ${armour.attackValue} D: ${armour.defenseValue}"
 
     fun equip(inventory: Inventory, combatItem: GameCombatItem): GameCombatItem {
-        combatItem.whenTypeIs<Weapon> { equipWeapon(inventory, it) }
-        combatItem.whenTypeIs<Armour> { equipArmour(inventory, it) }
+        combatItem.whenTypeIs<Weapon> { return equipWeapon(inventory, it) }
+        combatItem.whenTypeIs<Armour> { return equipArmour(inventory, it) }
         throw IllegalStateException("Combat item is not Weapon or Armour.")
     }
 

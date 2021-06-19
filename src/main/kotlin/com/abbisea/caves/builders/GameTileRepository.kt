@@ -10,6 +10,7 @@ import com.abbisea.caves.builders.GameColors.UNREVEALED_COLOR
 import com.abbisea.caves.builders.GameColors.WALL_BACKGROUND
 import com.abbisea.caves.builders.GameColors.WALL_FOREGROUND
 import com.abbisea.caves.builders.GameColors.ZIRCON_COLOR
+import com.abbisea.caves.builders.GameColors.ZOMBIE_COLOR
 import org.hexworks.zircon.api.color.ANSITileColor
 import org.hexworks.zircon.api.data.CharacterTile
 import org.hexworks.zircon.api.data.Tile
@@ -63,6 +64,12 @@ object GameTileRepository {
     val BAT = Tile.newBuilder()
         .withCharacter('b')
         .withForegroundColor(BAT_COLOR)
+        .withBackgroundColor(FLOOR_BACKGROUND)
+        .buildCharacterTile()
+
+    val ZOMBIE = Tile.newBuilder()
+        .withCharacter('z')
+        .withForegroundColor(ZOMBIE_COLOR)
         .withBackgroundColor(FLOOR_BACKGROUND)
         .buildCharacterTile()
 

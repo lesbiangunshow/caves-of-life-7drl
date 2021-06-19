@@ -18,6 +18,8 @@ import org.hexworks.zircon.api.screen.Screen
 import org.hexworks.zircon.api.shape.EllipseFactory
 import org.hexworks.zircon.api.shape.LineFactory
 import org.hexworks.zircon.api.uievent.UIEvent
+import kotlin.math.abs
+import kotlin.math.pow
 
 class World(
     startingBlocks: Map<Position3D, GameBlock>,
@@ -148,4 +150,27 @@ class World(
             }
         }.orElse(listOf())
     }
+
+    fun findPath(
+        looker: AnyGameEntity,
+        target: AnyGameEntity
+    ): List<Position> {
+        var result = listOf<Position>()
+        looker.findAttribute(Vision::class).map { (radius) ->
+            val level = looker.position.z
+            if (looker.position.isWithinRangeOf(target.position, radius)) {
+                val path = LineFactory.buildLine(looker.position.to2DPosition(), target.position.to2DPosition())
+                if (path.none { isVisionBlockedAt(it.toPosition3D(level)) }) {
+                    result = path.positions.toList().drop(1)
+                }
+            }
+        }
+        return result
+    }
+
+    private fun Position3D.isWithinRangeOf(other: Position3D, radius: Int): Boolean =
+        isUnknown.not()
+                && other.isUnknown.not()
+                && z == other.z
+                && (x - other.x).toDouble().pow(2) + abs(y - other.y).toDouble().pow(2) <= radius.toDouble().pow(2)
 }

@@ -11,6 +11,7 @@ import com.abbisea.caves.GameConfig.WINDOW_HEIGHT
 import com.abbisea.caves.GameConfig.WINDOW_WIDTH
 import com.abbisea.caves.GameConfig.WORLD_SIZE
 import com.abbisea.caves.GameConfig.ZIRCONS_PER_LEVEL
+import com.abbisea.caves.GameConfig.ZOMBIES_PER_LEVEL
 import com.abbisea.caves.attributes.types.Player
 import com.abbisea.caves.extensions.GameEntity
 import com.abbisea.caves.world.Game
@@ -43,6 +44,7 @@ class GameBuilder(val worldSize: Size3D) {
         val player = addPlayer()
         addFungi()
         addBats()
+        addZombies()
         addZircons()
         addWeapons()
         addArmor()
@@ -73,6 +75,14 @@ class GameBuilder(val worldSize: Size3D) {
         repeat(world.actualSize.zLength) { level ->
             repeat(BATS_PER_LEVEL) {
                 EntityFactory.newBat().addToWorld(level)
+            }
+        }
+    }
+
+    private fun addZombies() = also {
+        repeat(world.actualSize.zLength) { level ->
+            repeat(ZOMBIES_PER_LEVEL) {
+                EntityFactory.newZombie().addToWorld(level)
             }
         }
     }

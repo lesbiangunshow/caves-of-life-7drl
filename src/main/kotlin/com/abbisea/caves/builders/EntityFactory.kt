@@ -117,6 +117,27 @@ object EntityFactory {
         behaviors(Wanderer)
     }
 
+    fun newZombie() = newGameEntityOfType(Zombie) {
+        attributes(
+            BlockOccupier,
+            EntityPosition(),
+            EntityTile(GameTileRepository.ZOMBIE),
+            Vision(10),
+            CombatStats.create(
+                maxHp = 25,
+                attackValue = 8,
+                defenseValue = 4
+            ),
+            Inventory(2).apply {
+                addItem(newRandomArmor())
+                addItem(newRandomWeapon())
+            },
+            EntityActions(Attack::class)
+        )
+        facets(Movable, Attackable, ItemDropper, LootDropper, Destructible)
+        behaviors(HunterSeeker or Wanderer)
+    }
+
     fun newBatMeat() = newGameEntityOfType(BatMeat) {
         attributes(
             ItemIcon(

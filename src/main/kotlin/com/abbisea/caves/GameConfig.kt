@@ -12,6 +12,7 @@ object GameConfig {
     const val FUNGI_PER_LEVEL = 15
     const val MAXIMUM_FUNGUS_SPREAD = 15
     const val BATS_PER_LEVEL = 10
+    const val ZOMBIES_PER_LEVEL = 3
 
     const val ZIRCONS_PER_LEVEL = 20
     const val WEAPONS_PER_LEVEL = 3
