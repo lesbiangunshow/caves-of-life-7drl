@@ -5,6 +5,7 @@ import com.abbisea.caves.attributes.flags.BlockOccupier
 import com.abbisea.caves.attributes.flags.VisionBlocker
 import com.abbisea.caves.attributes.types.*
 import com.abbisea.caves.builders.GameTileRepository.PLAYER
+import com.abbisea.caves.extensions.GameEntity
 import com.abbisea.caves.messages.Attack
 import com.abbisea.caves.messages.Dig
 import com.abbisea.caves.systems.*
@@ -14,6 +15,7 @@ import org.hexworks.amethyst.api.entity.EntityType
 import org.hexworks.amethyst.api.newEntityOfType
 import org.hexworks.zircon.api.GraphicalTilesetResources
 import org.hexworks.zircon.api.data.Tile
+import kotlin.random.Random
 
 fun <T : EntityType> newGameEntityOfType(
     type: T,
@@ -39,6 +41,10 @@ object EntityFactory {
             ),
             Vision(9),
             Inventory(10),
+            Equipment(
+                initialWeapon = newClub(),
+                initialArmour = newJacket()
+            ),
             EnergyLevel(1000, 1000)
         )
         behaviors(InputReceiver, EnergyExpender)
@@ -135,6 +141,149 @@ object EntityFactory {
             ),
             EntityPosition(),
             EntityTile(GameTileRepository.ZIRCON)
+        )
+    }
+
+    fun newRandomWeapon(): GameEntity<Weapon> = when (Random.nextInt(3)) {
+        0 -> newDagger()
+        1 -> newSword()
+        else -> newStaff()
+    }
+
+    fun newRandomArmor(): GameEntity<Armour> = when (Random.nextInt(3)) {
+        0 -> newLightArmor()
+        1 -> newMediumArmor()
+        else -> newHeavyArmor()
+    }
+
+    fun newDagger() = newGameEntityOfType(Dagger) {
+        attributes(
+            ItemIcon(
+                Tile.newBuilder()
+                    .withName("Dagger")
+                    .withTileset(GraphicalTilesetResources.nethack16x16())
+                    .buildGraphicalTile()
+            ),
+            EntityPosition(),
+            ItemCombatStats(
+                attackValue = 4,
+                combatItemType = "Weapon"
+            ),
+            EntityTile(GameTileRepository.DAGGER)
+        )
+    }
+
+    fun newSword() = newGameEntityOfType(Sword) {
+        attributes(
+            ItemIcon(
+                Tile.newBuilder()
+                    .withName("Short sword")
+                    .withTileset(GraphicalTilesetResources.nethack16x16())
+                    .buildGraphicalTile()
+            ),
+            EntityPosition(),
+            ItemCombatStats(
+                attackValue = 6,
+                combatItemType = "Weapon"
+            ),
+            EntityTile(GameTileRepository.SWORD)
+        )
+    }
+
+    fun newStaff() = newGameEntityOfType(Staff) {
+        attributes(
+            ItemIcon(
+                Tile.newBuilder()
+                    .withName("staff")
+                    .withTileset(GraphicalTilesetResources.nethack16x16())
+                    .buildGraphicalTile()
+            ),
+            EntityPosition(),
+            ItemCombatStats(
+                attackValue = 4,
+                defenseValue = 2,
+                combatItemType = "Weapon"
+            ),
+            EntityTile(GameTileRepository.STAFF)
+        )
+    }
+
+    fun newLightArmor() = newGameEntityOfType(LightArmor) {
+        attributes(
+            ItemIcon(
+                Tile.newBuilder()
+                    .withName("Leather armor")
+                    .withTileset(GraphicalTilesetResources.nethack16x16())
+                    .buildGraphicalTile()
+            ),
+            EntityPosition(),
+            ItemCombatStats(
+                defenseValue = 2,
+                combatItemType = "Armor"
+            ),
+            EntityTile(GameTileRepository.LIGHT_ARMOR)
+        )
+    }
+
+    fun newMediumArmor() = newGameEntityOfType(MediumArmor) {
+        attributes(
+            ItemIcon(
+                Tile.newBuilder()
+                    .withName("Chain mail")
+                    .withTileset(GraphicalTilesetResources.nethack16x16())
+                    .buildGraphicalTile()
+            ),
+            EntityPosition(),
+            ItemCombatStats(
+                defenseValue = 3,
+                combatItemType = "Armor"
+            ),
+            EntityTile(GameTileRepository.MEDIUM_ARMOR)
+        )
+    }
+
+    fun newHeavyArmor() = newGameEntityOfType(HeavyArmor) {
+        attributes(
+            ItemIcon(
+                Tile.newBuilder()
+                    .withName("Plate mail")
+                    .withTileset(GraphicalTilesetResources.nethack16x16())
+                    .buildGraphicalTile()
+            ),
+            EntityPosition(),
+            ItemCombatStats(
+                defenseValue = 4,
+                combatItemType = "Armor"
+            ),
+            EntityTile(GameTileRepository.HEAVY_ARMOR)
+        )
+    }
+
+    fun newClub() = newGameEntityOfType(Club) {
+        attributes(
+            ItemCombatStats(combatItemType = "Weapon"),
+            EntityTile(GameTileRepository.CLUB),
+            EntityPosition(),
+            ItemIcon(
+                Tile.newBuilder()
+                    .withName("Club")
+                    .withTileset(GraphicalTilesetResources.nethack16x16())
+                    .buildGraphicalTile()
+            )
+        )
+    }
+
+    fun newJacket() = newGameEntityOfType(Jacket) {
+        attributes(
+            ItemCombatStats(combatItemType = "Armor"),
+            EntityTile(GameTileRepository.JACKET),
+            EntityPosition(),
+            ItemIcon(
+                Tile.newBuilder()
+                    .withName("Leather jacket")
+                    .withTileset(GraphicalTilesetResources.nethack16x16())
+                    .buildGraphicalTile()
+            )
         )
     }
 }

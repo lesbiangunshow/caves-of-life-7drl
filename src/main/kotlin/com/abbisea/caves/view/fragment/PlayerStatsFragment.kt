@@ -3,6 +3,7 @@ package com.abbisea.caves.view.fragment
 import com.abbisea.caves.attributes.CombatStats
 import com.abbisea.caves.attributes.DisplayableAttribute
 import com.abbisea.caves.attributes.EnergyLevel
+import com.abbisea.caves.attributes.Equipment
 import com.abbisea.caves.attributes.types.Player
 import com.abbisea.caves.extensions.GameEntity
 import org.hexworks.zircon.api.Components
@@ -27,10 +28,13 @@ class PlayerStatsFragment(
                 findAndMap<EnergyLevel> {
                     addComponent(it.toComponent(width))
                 }
+                findAndMap<Equipment> {
+                    addComponent(it.toComponent(width))
+                }
             }
         }
 
-    private inline fun <reified T: DisplayableAttribute> Iterable<Any>.findAndMap(fn: (T) -> Unit) {
+    private inline fun <reified T : DisplayableAttribute> Iterable<Any>.findAndMap(fn: (T) -> Unit) {
         this.find { it is T }?.let { fn(it as T) }
     }
 }

@@ -1,5 +1,6 @@
 package com.abbisea.caves.view.fragment
 
+import com.abbisea.caves.attributes.types.CombatItem
 import com.abbisea.caves.attributes.types.Food
 import com.abbisea.caves.attributes.types.iconTile
 import com.abbisea.caves.extensions.GameItem
@@ -19,6 +20,11 @@ class InventoryRowFragment(width: Int, item: GameItem) : Fragment {
         .withText("Eat")
         .build()
 
+    val equipButton = Components.button()
+        .withDecorations()
+        .withText("Equip")
+        .build()
+
     override val root = Components.hbox()
         .withSpacing(1)
         .withSize(width, 1)
@@ -35,6 +41,9 @@ class InventoryRowFragment(width: Int, item: GameItem) : Fragment {
             addComponent(dropButton)
             item.whenTypeIs<Food> {
                 addComponent(eatButton)
+            }
+            item.whenTypeIs<CombatItem> {
+                addComponent(equipButton)
             }
         }
 }

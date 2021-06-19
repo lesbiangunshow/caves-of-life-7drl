@@ -14,6 +14,9 @@ object GameConfig {
     const val BATS_PER_LEVEL = 10
 
     const val ZIRCONS_PER_LEVEL = 20
+    const val WEAPONS_PER_LEVEL = 3
+    const val ARMOR_PER_LEVEL = 3
+
 
     // look and feel
     val TILESET = CP437TilesetResources.rogueYun16x16()

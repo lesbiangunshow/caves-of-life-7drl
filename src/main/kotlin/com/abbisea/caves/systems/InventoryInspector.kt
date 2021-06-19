@@ -1,9 +1,8 @@
 package com.abbisea.caves.systems
 
 import com.abbisea.caves.GameConfig
-import com.abbisea.caves.attributes.types.EnergyUser
-import com.abbisea.caves.attributes.types.Food
-import com.abbisea.caves.attributes.types.inventory
+import com.abbisea.caves.attributes.types.*
+import com.abbisea.caves.extensions.GameItem
 import com.abbisea.caves.extensions.whenTypeIs
 import com.abbisea.caves.messages.DropItem
 import com.abbisea.caves.messages.Eat
@@ -16,6 +15,7 @@ import org.hexworks.amethyst.api.Consumed
 import org.hexworks.amethyst.api.Response
 import org.hexworks.amethyst.api.base.BaseFacet
 import org.hexworks.amethyst.platform.Dispatchers
+import org.hexworks.cobalt.datatypes.Maybe
 import org.hexworks.zircon.api.ComponentDecorations.box
 import org.hexworks.zircon.api.ComponentDecorations.shadow
 import org.hexworks.zircon.api.Components
@@ -55,8 +55,16 @@ object InventoryInspector : BaseFacet<GameContext, InspectInventory>(InspectInve
                         }
                     }
                 }
+            },
+            onEquip = { item ->
+                var result = Maybe.empty<GameItem>()
+                itemHolder.whenTypeIs<EquipmentHolder> { equipmentHolder ->
+                    item.whenTypeIs<CombatItem> { combatItem ->
+                        result = Maybe.of(equipmentHolder.equip(itemHolder.inventory, combatItem))
+                    }
+                }
+                result
             }
-
         )
 
         panel.addFragment(fragment)

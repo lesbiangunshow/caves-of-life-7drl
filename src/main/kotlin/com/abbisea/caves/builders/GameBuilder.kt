@@ -1,10 +1,12 @@
 package com.abbisea.caves.builders
 
 import com.abbisea.caves.GameConfig
+import com.abbisea.caves.GameConfig.ARMOR_PER_LEVEL
 import com.abbisea.caves.GameConfig.BATS_PER_LEVEL
 import com.abbisea.caves.GameConfig.FUNGI_PER_LEVEL
 import com.abbisea.caves.GameConfig.LOG_AREA_HEIGHT
 import com.abbisea.caves.GameConfig.SIDEBAR_WIDTH
+import com.abbisea.caves.GameConfig.WEAPONS_PER_LEVEL
 import com.abbisea.caves.GameConfig.WINDOW_HEIGHT
 import com.abbisea.caves.GameConfig.WINDOW_WIDTH
 import com.abbisea.caves.GameConfig.WORLD_SIZE
@@ -42,6 +44,8 @@ class GameBuilder(val worldSize: Size3D) {
         addFungi()
         addBats()
         addZircons()
+        addWeapons()
+        addArmor()
         world.addWorldEntity(EntityFactory.newFogOfWar())
 
         return Game.create(world, player)
@@ -77,6 +81,22 @@ class GameBuilder(val worldSize: Size3D) {
         repeat(world.actualSize.zLength) { level ->
             repeat(ZIRCONS_PER_LEVEL) {
                 EntityFactory.newZircon().addToWorld(level)
+            }
+        }
+    }
+
+    private fun addWeapons() = also {
+        repeat(world.actualSize.zLength) { level ->
+            repeat(WEAPONS_PER_LEVEL) {
+                EntityFactory.newRandomWeapon().addToWorld(level)
+            }
+        }
+    }
+
+    private fun addArmor() = also {
+        repeat(world.actualSize.zLength) { level ->
+            repeat(ARMOR_PER_LEVEL) {
+                EntityFactory.newRandomArmor().addToWorld(level)
             }
         }
     }

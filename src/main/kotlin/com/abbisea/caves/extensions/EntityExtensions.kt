@@ -1,8 +1,6 @@
 package com.abbisea.caves.extensions
 
-import com.abbisea.caves.attributes.EntityActions
-import com.abbisea.caves.attributes.EntityPosition
-import com.abbisea.caves.attributes.EntityTile
+import com.abbisea.caves.attributes.*
 import com.abbisea.caves.attributes.flags.BlockOccupier
 import com.abbisea.caves.attributes.flags.VisionBlocker
 import com.abbisea.caves.attributes.types.Combatant
@@ -50,6 +48,22 @@ suspend fun AnyGameEntity.tryActionsOn(context: GameContext, target: AnyGameEnti
     }
     return result
 }
+
+val AnyGameEntity.attackValue: Int
+    get() {
+        val combat = findAttribute(CombatStats::class).map { it.attackValue }.orElse(0)
+        val equipment = findAttribute(Equipment::class).map { it.attackValue }.orElse(0)
+        val item = findAttribute(ItemCombatStats::class).map { it.attackValue }.orElse(0)
+        return combat + equipment + item
+    }
+
+val AnyGameEntity.defenseValue: Int
+    get() {
+        val combat = findAttribute(CombatStats::class).map { it.defenseValue }.orElse(0)
+        val equipment = findAttribute(Equipment::class).map { it.defenseValue }.orElse(0)
+        val item = findAttribute(ItemCombatStats::class).map { it.defenseValue }.orElse(0)
+        return combat + equipment + item
+    }
 
 val AnyGameEntity.blocksVision: Boolean
     get() = this.findAttribute(VisionBlocker::class).isPresent

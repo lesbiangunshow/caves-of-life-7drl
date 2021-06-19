@@ -1,6 +1,8 @@
 package com.abbisea.caves.systems
 
 import com.abbisea.caves.attributes.types.combatStats
+import com.abbisea.caves.extensions.attackValue
+import com.abbisea.caves.extensions.defenseValue
 import com.abbisea.caves.extensions.hasNoHealthLeft
 import com.abbisea.caves.extensions.isPlayer
 import com.abbisea.caves.functions.logGameEvent
@@ -19,7 +21,7 @@ object Attackable : BaseFacet<GameContext, Attack>(Attack::class) {
         val (context, attacker, target) = message
 
         return if (attacker.isPlayer || target.isPlayer) {
-            val damage = max(0, attacker.combatStats.attackValue - target.combatStats.defenseValue)
+            val damage = max(0, attacker.attackValue - target.defenseValue)
             val finalDamage = (Math.random() * damage).toInt() + 1
             target.combatStats.hp -= finalDamage
 

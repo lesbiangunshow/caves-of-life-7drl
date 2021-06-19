@@ -2,14 +2,17 @@ package com.abbisea.caves.view.fragment
 
 import com.abbisea.caves.attributes.Inventory
 import com.abbisea.caves.extensions.GameItem
+import org.hexworks.cobalt.datatypes.Maybe
 import org.hexworks.zircon.api.Components
 import org.hexworks.zircon.api.component.Fragment
+import org.hexworks.zircon.api.component.VBox
 
 class InventoryFragment(
     inventory: Inventory,
     width: Int,
-    onDrop: (GameItem) -> Unit,
-    onEat: (GameItem) -> Unit
+    private val onDrop: (GameItem) -> Unit,
+    private val onEat: (GameItem) -> Unit,
+    private val onEquip: (GameItem) -> Maybe<GameItem>
 ) : Fragment {
 
     companion object {
@@ -31,17 +34,27 @@ class InventoryFragment(
                     }
             )
             inventory.items.forEach { item ->
-                val row = InventoryRowFragment(width, item)
-                addFragment(row).apply {
-                    row.dropButton.onActivated {
-                        detach()
-                        onDrop(item)
-                    }
-                    row.eatButton.onActivated {
-                        detach()
-                        onEat(item)
-                    }
+                addRow(width, item)
+            }
+        }
+
+    private fun VBox.addRow(width: Int, item: GameItem) {
+        val row = InventoryRowFragment(width, item)
+        addFragment(row).apply {
+            row.dropButton.onActivated {
+                detach()
+                onDrop(item)
+            }
+            row.eatButton.onActivated {
+                detach()
+                onEat(item)
+            }
+            row.equipButton.onActivated {
+                onEquip(item).map { oldItem ->
+                    detach()
+                    addRow(width, oldItem)
                 }
             }
         }
+    }
 }
