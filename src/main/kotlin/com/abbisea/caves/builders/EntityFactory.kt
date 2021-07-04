@@ -30,6 +30,7 @@ object EntityFactory {
 
     fun newPlayer() = newGameEntityOfType(Player) {
         attributes(
+            ZirconCounter(),
             BlockOccupier,
             Experience(),
             EntityPosition(),
@@ -56,6 +57,7 @@ object EntityFactory {
             StairClimber,
             StairDescender,
             Attackable,
+            ZirconPicker,
             ItemPicker,
             ItemDropper,
             InventoryInspector,
@@ -80,6 +82,13 @@ object EntityFactory {
     fun newStairsDown() = newGameEntityOfType(StairsDown) {
         attributes(
             EntityTile(GameTileRepository.STAIRS_DOWN),
+            EntityPosition()
+        )
+    }
+
+    fun newExit() = newGameEntityOfType(Exit) {
+        attributes(
+            EntityTile(GameTileRepository.EXIT),
             EntityPosition()
         )
     }

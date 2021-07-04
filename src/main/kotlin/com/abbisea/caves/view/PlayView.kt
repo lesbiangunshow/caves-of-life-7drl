@@ -9,10 +9,12 @@ import com.abbisea.caves.builders.GameBuilder
 import com.abbisea.caves.builders.GameTileRepository
 import com.abbisea.caves.events.GameLogEvent
 import com.abbisea.caves.events.PlayerGainedLevel
+import com.abbisea.caves.events.PlayerWonTheGame
 import com.abbisea.caves.view.dialog.LevelUpDialog
 import com.abbisea.caves.view.fragment.PlayerStatsFragment
 import com.abbisea.caves.world.Game
 import org.hexworks.cobalt.databinding.api.extension.toProperty
+import org.hexworks.cobalt.events.api.DisposeSubscription
 import org.hexworks.cobalt.events.api.KeepSubscription
 import org.hexworks.cobalt.events.api.subscribeTo
 import org.hexworks.zircon.api.ComponentDecorations.box
@@ -86,6 +88,10 @@ class PlayView(
             subscribeTo<PlayerGainedLevel> {
                 screen.openModal(LevelUpDialog(screen, game.player))
                 KeepSubscription
+            }
+            subscribeTo<PlayerWonTheGame> {
+                replaceWith(WinView(grid, it.zircons))
+                DisposeSubscription
             }
         }
 

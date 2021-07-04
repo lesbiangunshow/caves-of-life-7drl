@@ -7,6 +7,7 @@ import com.abbisea.caves.extensions.whenTypeIs
 import com.abbisea.caves.messages.DropItem
 import com.abbisea.caves.messages.Eat
 import com.abbisea.caves.messages.InspectInventory
+import com.abbisea.caves.view.dialog.ExamineDialog
 import com.abbisea.caves.view.fragment.InventoryFragment
 import com.abbisea.caves.world.GameContext
 import kotlinx.coroutines.CoroutineScope
@@ -26,7 +27,7 @@ import org.hexworks.zircon.internal.component.modal.EmptyModalResult
 
 object InventoryInspector : BaseFacet<GameContext, InspectInventory>(InspectInventory::class) {
 
-    val DIALOG_SIZE = Size.create(35, 15)
+    val DIALOG_SIZE = Size.create(40, 15)
 
     override suspend fun receive(message: InspectInventory): Response {
         val (context, itemHolder, position) = message
@@ -64,6 +65,9 @@ object InventoryInspector : BaseFacet<GameContext, InspectInventory>(InspectInve
                     }
                 }
                 result
+            },
+            onExamine = { item ->
+                screen.openModal(ExamineDialog(screen, item))
             }
         )
 

@@ -1,19 +1,13 @@
 package com.abbisea.caves.systems
 
-import com.abbisea.caves.attributes.types.Item
 import com.abbisea.caves.attributes.types.addItem
-import com.abbisea.caves.extensions.GameItem
-import com.abbisea.caves.extensions.filterType
 import com.abbisea.caves.extensions.isPlayer
 import com.abbisea.caves.functions.logGameEvent
 import com.abbisea.caves.messages.PickItemUp
 import com.abbisea.caves.world.GameContext
-import com.abbisea.caves.world.World
 import org.hexworks.amethyst.api.Consumed
 import org.hexworks.amethyst.api.Response
 import org.hexworks.amethyst.api.base.BaseFacet
-import org.hexworks.cobalt.datatypes.Maybe
-import org.hexworks.zircon.api.data.Position3D
 
 object ItemPicker : BaseFacet<GameContext, PickItemUp>(PickItemUp::class) {
 
@@ -30,9 +24,4 @@ object ItemPicker : BaseFacet<GameContext, PickItemUp>(PickItemUp::class) {
         }
         return Consumed
     }
-
-    private fun World.findTopItem(position: Position3D): Maybe<GameItem> =
-        fetchBlockAt(position).flatMap { block ->
-            Maybe.ofNullable(block.entities.filterType<Item>().firstOrNull())
-        }
 }

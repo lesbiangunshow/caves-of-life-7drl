@@ -4,6 +4,7 @@ import com.abbisea.caves.attributes.types.Player
 import com.abbisea.caves.extensions.GameEntity
 import com.abbisea.caves.extensions.position
 import com.abbisea.caves.messages.*
+import com.abbisea.caves.view.dialog.HelpDialog
 import com.abbisea.caves.world.GameContext
 import org.hexworks.amethyst.api.base.BaseBehavior
 import org.hexworks.amethyst.api.entity.Entity
@@ -30,6 +31,7 @@ object InputReceiver : BaseBehavior<GameContext>() {
                 KeyCode.KEY_F -> player.moveDown(context)
                 KeyCode.KEY_P -> player.pickItemUp(currentPos, context)
                 KeyCode.KEY_I -> player.inspectInventory(currentPos, context)
+                KeyCode.KEY_H -> context.screen.openModal(HelpDialog(context.screen))
                 else -> logger.debug("UI Event ($uiEvent) does not have a corresponding command, it is ignored.")
             }
         }

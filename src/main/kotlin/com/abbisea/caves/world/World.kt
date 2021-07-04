@@ -1,10 +1,9 @@
 package com.abbisea.caves.world
 
 import com.abbisea.caves.attributes.Vision
+import com.abbisea.caves.attributes.types.Item
 import com.abbisea.caves.blocks.GameBlock
-import com.abbisea.caves.extensions.AnyGameEntity
-import com.abbisea.caves.extensions.blocksVision
-import com.abbisea.caves.extensions.position
+import com.abbisea.caves.extensions.*
 import org.hexworks.amethyst.api.Engine
 import org.hexworks.amethyst.internal.TurnBasedEngine
 import org.hexworks.cobalt.datatypes.Maybe
@@ -167,6 +166,11 @@ class World(
         }
         return result
     }
+
+    fun findTopItem(position: Position3D): Maybe<GameItem> =
+        fetchBlockAt(position).flatMap { block ->
+            Maybe.ofNullable(block.entities.filterType<Item>().firstOrNull())
+        }
 
     private fun Position3D.isWithinRangeOf(other: Position3D, radius: Int): Boolean =
         isUnknown.not()

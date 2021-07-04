@@ -1,5 +1,6 @@
 package com.abbisea.caves.view
 
+import com.abbisea.caves.GameConfig
 import org.hexworks.zircon.api.ColorThemes
 import org.hexworks.zircon.api.ComponentDecorations.box
 import org.hexworks.zircon.api.Components
@@ -8,11 +9,17 @@ import org.hexworks.zircon.api.grid.TileGrid
 import org.hexworks.zircon.api.view.base.BaseView
 import kotlin.system.exitProcess
 
-class WinView(private val grid: TileGrid) : BaseView(grid, ColorThemes.arc()) {
+class WinView(
+    private val grid: TileGrid,
+    zircons: Int
+) : BaseView(grid, ColorThemes.arc()) {
 
     init {
-        val header = Components.header()
-            .withText("You won!")
+        val header = Components.textBox(GameConfig.WINDOW_WIDTH / 2)
+            .addHeader("You won!")
+            .addNewLine()
+            .addParagraph("Congratulations! You have escaped from Caves of Zircon!", withNewLine = false)
+            .addParagraph("You've managed to find $zircons Zircons.")
             .withAlignmentWithin(screen, ComponentAlignment.CENTER)
             .build()
 

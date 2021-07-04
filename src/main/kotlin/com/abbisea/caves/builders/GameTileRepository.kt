@@ -55,6 +55,12 @@ object GameTileRepository {
         .withBackgroundColor(FLOOR_BACKGROUND)
         .buildCharacterTile()
 
+    val EXIT = Tile.newBuilder()
+        .withCharacter('+')
+        .withForegroundColor(ACCENT_COLOR)
+        .withBackgroundColor(FLOOR_BACKGROUND)
+        .buildCharacterTile()
+
     val FUNGUS = Tile.newBuilder()
         .withCharacter('f')
         .withForegroundColor(FUNGUS_COLOR)

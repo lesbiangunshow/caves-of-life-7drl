@@ -12,7 +12,8 @@ class InventoryFragment(
     width: Int,
     private val onDrop: (GameItem) -> Unit,
     private val onEat: (GameItem) -> Unit,
-    private val onEquip: (GameItem) -> Maybe<GameItem>
+    private val onEquip: (GameItem) -> Maybe<GameItem>,
+    private val onExamine: (GameItem) -> Unit
 ) : Fragment {
 
     companion object {
@@ -44,6 +45,9 @@ class InventoryFragment(
             row.dropButton.onActivated {
                 detach()
                 onDrop(item)
+            }
+            row.examineButton.onActivated {
+                onExamine(item)
             }
             row.eatButton.onActivated {
                 detach()

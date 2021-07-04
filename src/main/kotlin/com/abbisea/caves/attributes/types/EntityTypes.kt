@@ -8,7 +8,7 @@ object FOW : BaseEntityType(
 
 object Player : BaseEntityType(
     name = "player"
-), Combatant, ItemHolder, EquipmentHolder, EnergyUser, ExperienceGainer
+), Combatant, ItemHolder, EquipmentHolder, EnergyUser, ExperienceGainer, ZirconHolder
 
 object Wall : BaseEntityType(
     name = "wall"
@@ -20,6 +20,10 @@ object StairsUp : BaseEntityType(
 
 object StairsDown : BaseEntityType(
     name = "stairs down"
+)
+
+object Exit : BaseEntityType(
+    name = "exit"
 )
 
 object Zircon : BaseEntityType(

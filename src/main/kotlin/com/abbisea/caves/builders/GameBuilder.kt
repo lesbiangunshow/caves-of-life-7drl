@@ -63,6 +63,10 @@ class GameBuilder(val worldSize: Size3D) {
             atArea = world.visibleSize.to2DSize()
         )
 
+    private fun addExit() = also {
+        EntityFactory.newExit().addToWorld(0)
+    }
+
     private fun addFungi() = also {
         repeat(world.actualSize.zLength) { level ->
             repeat(FUNGI_PER_LEVEL) {
