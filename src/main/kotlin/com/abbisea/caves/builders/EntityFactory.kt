@@ -31,6 +31,7 @@ object EntityFactory {
     fun newPlayer() = newGameEntityOfType(Player) {
         attributes(
             BlockOccupier,
+            Experience(),
             EntityPosition(),
             EntityTile(PLAYER),
             EntityActions(Dig::class, Attack::class),
@@ -49,6 +50,7 @@ object EntityFactory {
         )
         behaviors(InputReceiver, EnergyExpender)
         facets(
+            ExperienceAccumulator,
             Movable,
             CameraMover,
             StairClimber,

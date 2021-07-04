@@ -8,6 +8,8 @@ import com.abbisea.caves.GameConfig.WINDOW_WIDTH
 import com.abbisea.caves.builders.GameBuilder
 import com.abbisea.caves.builders.GameTileRepository
 import com.abbisea.caves.events.GameLogEvent
+import com.abbisea.caves.events.PlayerGainedLevel
+import com.abbisea.caves.view.dialog.LevelUpDialog
 import com.abbisea.caves.view.fragment.PlayerStatsFragment
 import com.abbisea.caves.world.Game
 import org.hexworks.cobalt.databinding.api.extension.toProperty
@@ -72,14 +74,21 @@ class PlayView(
             Processed
         }
 
-        Zircon.eventBus.subscribeTo<GameLogEvent> { (text) ->
-            logArea.addParagraph(
-                paragraph = text,
-                withNewLine = false,
-                withTypingEffectSpeedInMs = 50
-            )
-            KeepSubscription
+        with(Zircon.eventBus) {
+            subscribeTo<GameLogEvent> { (text) ->
+                logArea.addParagraph(
+                    paragraph = text,
+                    withNewLine = false,
+                    withTypingEffectSpeedInMs = 50
+                )
+                KeepSubscription
+            }
+            subscribeTo<PlayerGainedLevel> {
+                screen.openModal(LevelUpDialog(screen, game.player))
+                KeepSubscription
+            }
         }
+
 
         game.world.update(
             screen,
